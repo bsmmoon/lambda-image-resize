@@ -41,10 +41,6 @@ def lambda_handler(event, context):
     thumbnail = resize_image(download_path, (150, 150))
     thumbnail_key = f'thumbnails/{key}'
     s3_client.upload_fileobj(thumbnail, bucket, thumbnail_key)
-    
-    medium = resize_image(download_path, (600, 600))
-    medium_key = f'medium/{key}'
-    s3_client.upload_fileobj(medium, bucket, medium_key)
 
     return {
         'statusCode': 200,
