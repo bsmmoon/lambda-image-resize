@@ -1,13 +1,19 @@
 import os
 import json
 import boto3
-from PIL import Image
+from PIL import Image, ImageFile
 from io import BytesIO
 
 s3_client = boto3.client('s3')
 
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 def resize_image(image_path, size):
     with Image.open(image_path) as image:
+        # Convert RGBA to RGB if necessary
+        if image.mode == 'RGBA':
+            image = image.convert('RGB')
+
         image.thumbnail(size)
         buffer = BytesIO()
         image.save(buffer, "JPEG")
