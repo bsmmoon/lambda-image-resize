@@ -23,6 +23,13 @@ setup:
 install:
 	pip install pillow -t .
 
+large-build:
+	cp lambdas/large.py ./lambda_function.py
+	zip -r lambda_image_resizer.zip .
+
+large-upload:
+	aws s3 cp lambda_image_resizer.zip s3://seokmin-rbe796/lambda/lambda_image_resizer_large.zip
+
 medium-build:
 	cp lambdas/medium.py ./lambda_function.py
 	zip -r lambda_image_resizer.zip .
